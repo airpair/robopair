@@ -40,18 +40,24 @@ describe("Hangout Automation", function(){
 			robopair.close();
 		});
 
-		it("login to google with team@", function(done) {
-			
+		it("login to google with team@", function() {
 			client = robopair.launch("https://accounts.google.com");
 			client.setValue("input#Email", "team@airpair.com")
 				.setValue("input#Passwd", "jg5ThvRF")
-				.click("input#signIn")
-				.click("input#MapChallenge.radio")
+				.click("input#signIn");
+
+			// if challenged
+			client.click("input#MapChallenge.radio")
 				.setValue("div#MapChallengeOptionContent input#address", "San Francisco")
 				.click("input#submitChallenge");
+				// NEED to .waitFor() and actuall assert something
 		});
 
-		it("join hangout via link");
+		it("join hangout", function() {
+			// var manual_hangout_url = "https://plus.google.com/hangouts/_?hso=0&gid=140030887085";
+			// client.url(manual_hangout_url);
+		});
+
 		it("stop recording");
 		it("recover recording link");
 		it("recover hangout link");
