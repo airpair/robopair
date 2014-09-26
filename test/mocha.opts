@@ -1,0 +1,5 @@
+--interface bdd
+--reporter spec
+--growl
+--colors
+--watch

@@ -1,0 +1,17 @@
+{
+  "name": "robopair",
+  "version": "0.1.0",
+  "description": "hangouts automation",
+  "main": "start.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.9.1"
+  }
+}
