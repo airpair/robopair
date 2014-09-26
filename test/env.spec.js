@@ -12,15 +12,15 @@ describe("Local Environment", function(){
 
 	it("javadk is available");
 
-	it("can launch " + the_browser + " and reach accounts.google.com" , function(done) {
+	it("can launch " + the_browser + " and reach www.google.com" , function(done) {
 		var page_title = "";
 
 		webdriverio
 			.remote(options).init()
-			.url('https://accounts.google.com')
+			.url('https://www.google.com')
 			.title(function(err, res) {
         		page_title = res.value;
-        		expect(res.value).to.equal("Sign in - Google Accounts");
+        		expect(res.value).to.equal("Google");
         		done();
 	    	})
 	    	.end();
