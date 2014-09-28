@@ -6,12 +6,10 @@ describe("Local Environment", function(){
 	var the_browser = 'firefox';
 	var options = { desiredCapabilities: { browserName: the_browser } };
 
+	it("javadk is available");
 	it("webdriver is available", function(){
 		expect(webdriverio).to.exist;
 	});
-
-	it("javadk is available");
-
 	it("can launch " + the_browser + " and reach www.google.com" , function(done) {
 		var page_title = "";
 

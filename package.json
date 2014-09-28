@@ -13,5 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^1.9.1"
+  },
+  "dependencies": {
+    "webdriverio": "^2.2.3"
   }
 }
