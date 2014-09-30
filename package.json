@@ -15,6 +15,8 @@
     "chai": "^1.9.1"
   },
   "dependencies": {
-    "webdriverio": "^2.2.3"
+    "webdriverio": "^2.2.3",
+    "express": "3.4.7",
+    "jade": "*"
   }
 }
