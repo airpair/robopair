@@ -1,4 +1,4 @@
-module.exports = function(the_webdriver, the_browser) {
+module.exports = (function() {
 
 	var strings = {
 		google_login_url: "https://accounts.google.com",
@@ -20,50 +20,57 @@ module.exports = function(the_webdriver, the_browser) {
 		hangout_start_button: "div.xb-Mc-ie-Gc div.c-N-K"
 	};
 
-	var webdriver = the_webdriver;
-	var browser = the_browser;
+	var webdriver;
+	var browser;
 	var client = null;
 
-	this.launch = function() {
-		client = webdriver
-			.remote({ desiredCapabilities: { browserName: the_browser } })
-			.init();
-		return client;
+	function Robopair(the_webdriver, the_browser) {
+		var webdriver = the_webdriver;
+		var browser = the_browser;
+
+		this.launch = function() {
+			client = webdriver
+				.remote({ desiredCapabilities: { browserName: the_browser } })
+				.init();
+			return client;
+		};
+
+		this.close = function() {
+			client.end();
+			client = null;
+		};
+
+		this.loginToGoogle = function() {
+			client.url(strings.google_login_url)
+				.waitFor(selectors.google_login_email, 5000)
+				.setValue(selectors.google_login_email, strings.team_email)
+				.setValue(selectors.google_login_password, strings.team_pass)
+				.click(selectors.google_login_signin)
+				.waitFor(selectors.google_home_personal_info_tab, 5000, 
+					function(err, res, command) { 
+						if (err) {
+							client.click(selectors.google_challenge_choose_location)
+								.setValue(selectors.google_challenge_location, strings.challenge_location )
+								.click(selectors.google_challenge_submit)
+								.waitFor(selectors.google_home_personal_info_tab, 5000, 
+									function(err) { 
+										console.log("GOOGLE LOGIN FAILURE", err);
+									});
+						}
+					});
+
+			return client;
+		};
+
+		this.startAHangout = function(the_url, the_name, invites) {
+			client.url(the_url).waitFor(selectors.hangout_name, 60000);
+			if (the_name)
+				client.setValue(selectors.hangout_name, the_name);
+			if (invites)
+				client.setValue(selectors.hangout_invite_list, invites);
+			return client.pause(1000).click(selectors.hangout_start_button);
+		};
 	};
 
-	this.close = function() {
-		client.end();
-		client = null;
-	};
-
-	this.loginToGoogle = function() {
-		client.url(strings.google_login_url)
-			.waitFor(selectors.google_login_email, 5000)
-			.setValue(selectors.google_login_email, strings.team_email)
-			.setValue(selectors.google_login_password, strings.team_pass)
-			.click(selectors.google_login_signin)
-			.waitFor(selectors.google_home_personal_info_tab, 5000, 
-				function(err, res, command) { 
-					if (err) {
-						client.click(selectors.google_challenge_choose_location)
-							.setValue(selectors.google_challenge_location, strings.challenge_location )
-							.click(selectors.google_challenge_submit)
-							.waitFor(selectors.google_home_personal_info_tab, 5000, 
-								function(err) { 
-									console.log("GOOGLE LOGIN FAILURE", err);
-								});
-					}
-				});
-
-		return client;
-	};
-
-	this.startAHangout = function(the_url, the_name, invites) {
-		client.url(the_url).waitFor(selectors.hangout_name, 60000);
-		if (the_name)
-			client.setValue(selectors.hangout_name, the_name);
-		if (invites)
-			client.setValue(selectors.hangout_invite_list, invites);
-		return client.pause(1000).click(selectors.hangout_start_button);
-	};
-};
+	return Robopair;
+})();

@@ -1,5 +1,6 @@
 var express = require('express');
 var routes = require('./routes');
+var api = require('./routes/api');
 var http = require('http');
 var path = require('path');
 
@@ -27,6 +28,11 @@ function apiApp() {
 	app.use(express.json());
 	app.use(express.urlencoded());
 	app.use(express.methodOverride());
+
+	app.post('/launch', api.launch);
+	app.post('/login/google', api.login_to_google);
+	app.post('/hangout', api.hangout);
+
 	return app;
 }
 

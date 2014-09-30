@@ -1,8 +1,11 @@
+exports.launch = function(req, res){
+	// do something
+};
 
-/*
- * GET home page.
- */
+exports.login_to_google = function(req, res) {
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+};
+
+exports.hangout = function(res, res) {
+
 };
