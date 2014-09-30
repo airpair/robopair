@@ -3,7 +3,7 @@ var webdriverio = require('webdriverio');
 
 describe("Local Environment", function(){
 	this.timeout(60000); // disable timeouts in this suite
-	var the_browser = 'firefox';
+	var the_browser = 'chrome';
 	var options = { desiredCapabilities: { browserName: the_browser } };
 
 	it("javadk is available");
