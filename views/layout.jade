@@ -3,6 +3,8 @@ html
   head
     title VM Control Panel
     link(rel='stylesheet', href='robopair/style.css')
+    script(src="robopair/bower_components/angularjs/angular.min.js")
+    script(src="robopair/client.js")
   body
-    div(id="main")
+    div(id="main", ng-app="Robopair", ng-controller="MainController")
       block content

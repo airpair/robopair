@@ -1,11 +1,23 @@
+var webdriverio = require('webdriverio');
+var Robopair = require('../robopair');
+
+var robopair = new Robopair(webdriverio, 'chrome');
+
 exports.launch = function(req, res){
-	// do something
+	robopair.launch().pause(100, function() { 
+		res.send(201);
+	 });
 };
 
-exports.login_to_google = function(req, res) {
-
+exports.loginToGoogle = function(req, res) {
+	robopair.loginToGoogle().pause(100, function() { 
+		res.send(200);
+	});
 };
 
-exports.hangout = function(res, res) {
-
+exports.startAHangout = function(req, res) {
+	var data = req.body;
+	robopair.startAHangout(data.name, data.invites).pause(100, function() {
+		res.send(201);
+	});
 };

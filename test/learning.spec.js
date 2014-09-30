@@ -30,9 +30,7 @@ describe("Hangout Automation", function(){
 		});
 
 		it("start a hangout", function(done) {
-			var manual_hangout_url = "https://plus.google.com/hangouts/_?hso=0&gid=140030887085";
-			client = robopair.startAHangout(manual_hangout_url, 
-				"Customer+Expert {technology}", "stevejpurves@gmail.com")
+			client = robopair.startAHangout("Customer+Expert {technology}", "stevejpurves@gmail.com")
 				.pause(100, function() { done(); });
 		});
 

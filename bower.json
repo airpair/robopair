@@ -1,0 +1,17 @@
+{
+  "name": "robopair",
+  "main": "robopair.js",
+  "version": "0.1",
+  "homepage": "https://github.com/stevejpurves/robopair",
+  "authors": [
+    "Steve Purves <stevejpurves@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

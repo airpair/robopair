@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1 VM Control Panel
-  p Welcome to ....
+  input(type="button", value="Launch Chrome", ng-click="launch()")
+  br
+  input(type="button", value="Login to Google", ng-click="loginToGoogle()")
+  br
+  div
+    input(type="button", value="Start A Hangout", ng-click="startAHangout()")
+    input(type="entry", placeholder="Customer+Expert {technology}", ng-model="hangoutName")
+    input(type="entry", placeholder="Invite emails, comma separated", ng-model="invites")
+  p {{lastStatus}}

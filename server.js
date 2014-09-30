@@ -30,8 +30,8 @@ function apiApp() {
 	app.use(express.methodOverride());
 
 	app.post('/launch', api.launch);
-	app.post('/login/google', api.login_to_google);
-	app.post('/hangout', api.hangout);
+	app.post('/login/google', api.loginToGoogle);
+	app.post('/hangout', api.startAHangout);
 
 	return app;
 }

@@ -62,7 +62,8 @@ module.exports = (function() {
 			return client;
 		};
 
-		this.startAHangout = function(the_url, the_name, invites) {
+		this.startAHangout = function(the_name, invites) {
+			var the_url = "https://plus.google.com/hangouts/_?hso=0&gid=140030887085";
 			client.url(the_url).waitFor(selectors.hangout_name, 60000);
 			if (the_name)
 				client.setValue(selectors.hangout_name, the_name);
