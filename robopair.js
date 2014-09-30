@@ -17,7 +17,9 @@ module.exports = (function() {
 		google_challenge_submit: "input#submitChallenge",
 		hangout_name: "div.xb-Mc-gh-fi input",
 		hangout_invite_list: "input.n-Ol-Qa",
-		hangout_start_button: "div.xb-Mc-ie-Gc div.c-N-K"
+		hangout_start_button: "div.xb-Mc-ie-Gc div.c-N-K",
+		recording_start_button: '.tb-b-m div[role="button"]',
+		recording_confirm_ok: '.qa-l-ra div[role="button"]'
 	};
 
 	var webdriver;
@@ -70,6 +72,12 @@ module.exports = (function() {
 			if (invites)
 				client.setValue(selectors.hangout_invite_list, invites);
 			return client.pause(1000).click(selectors.hangout_start_button);
+		};
+
+		this.record = function() {
+			return client.click(selectors.recording_start_button)
+				.waitFor(selectors.recording_confirm_ok, 1000)
+				.click(selectors.recording_confirm_ok);
 		};
 	};
 

@@ -32,6 +32,7 @@ function apiApp() {
 	app.post('/launch', api.launch);
 	app.post('/login/google', api.loginToGoogle);
 	app.post('/hangout', api.startAHangout);
+	app.post('/record', api.record);
 
 	return app;
 }

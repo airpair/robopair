@@ -5,28 +5,28 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	$scope.invites = "stevejpurves@gmail.com";
 	$scope.lastStatus = "";
 
-	function logLastStatus(data, status)
-	{
-		$scope.lastStatus = status + " | " + data;
+	function logStuff(promise) {
+		function logLastStatus(data, status) {
+			$scope.lastStatus = status + " | " + data;
+		}
+		promise.success(logLastStatus).error(logLastStatus);
 	}
 
 	$scope.launch = function() {
-		$http.post('/robopair/api/launch')
-			.success(logLastStatus)
-			.error(logLastStatus);
+		logStuff( $http.post('/robopair/api/launch') );
 	};
 
 	$scope.loginToGoogle = function() {
-		$http.post('/robopair/api/login/google')
-			.success(logLastStatus)
-			.error(logLastStatus);
+		logStuff( $http.post('/robopair/api/login/google') );
 	};
 
 	$scope.startAHangout = function() {
-		$http.post('/robopair/api/hangout',
-			{name: $scope.hangoutName, invites: $scope.invites})
-			.success(logLastStatus)
-			.error(logLastStatus);
+		logStuff($http.post('/robopair/api/hangout',
+			{name: $scope.hangoutName, invites: $scope.invites}));
+	};
+
+	$scope.startRecording = function() {
+		logStuff($http.post('/robopair/api/record'));
 	};
 
 }]);

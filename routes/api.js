@@ -18,6 +18,12 @@ exports.loginToGoogle = function(req, res) {
 exports.startAHangout = function(req, res) {
 	var data = req.body;
 	robopair.startAHangout(data.name, data.invites).pause(100, function() {
-		res.send(201);
+		res.send(200);
+	});
+};
+
+exports.record = function(req, res) {
+	robopair.record().pause(100, function(){
+		res.send(200);
 	});
 };
