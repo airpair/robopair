@@ -1,57 +1,9 @@
 var expect = require('chai').expect;
 var webdriverio = require('webdriverio');
 var test_options =  { desiredCapabilities: { browserName: 'chrome' } };
+var Robopair = require('../robopair');
 
-function Robopair(the_webdriver, the_browser){
-	var webdriver = the_webdriver;
-	var browser = the_browser;
-	var client = null;
-
-	this.launch = function() {
-		client = webdriver
-			.remote({ desiredCapabilities: { browserName: the_browser } })
-			.init();
-		return client;
-	};
-
-	this.close = function() {
-		client.end();
-		client = null;
-	};
-
-	this.loginToGoogle = function() {
-		client.url("https://accounts.google.com")
-			.waitFor("input#Email", 5000)
-			.setValue("input#Email", "team@airpair.com")
-			.setValue("input#Passwd", "jg5ThvRF")
-			.click("input#signIn")
-			.waitFor('a#nav-personalinfo', 5000, 
-				function(err, res, command) { 
-					if (err) {
-						client.click("input#MapChallenge.radio")
-							.setValue("div#MapChallengeOptionContent input#address", "San Francisco")
-							.click("input#submitChallenge")
-							.waitFor('a#nav-personalinfo', 5000, 
-								function(err) { 
-									console.log("GOOGLE LOGIN FAILURE", err);
-								});
-					}
-				});
-
-		return client;
-	};
-
-	this.joinHangout = function(the_url) {
-		client.url(the_url)
-			.waitFor('div.xb-Mc-gh-fi input', 60000)
-			.setValue('div.xb-Mc-gh-fi input', "Customer+Expert {technology}")
-			.setValue('input.n-Ol-Qa', "stevejpurves@gmail.com")
-			.pause(1000)
-			.click('div.xb-Mc-ie-Gc div.c-N-K', 
-				function(){ console.log("in callback"); });
-		return client;
-	};
-};
+console.log(Robopair);
 
 describe("Hangout Automation", function(){
 	this.timeout(60000); // disable timeouts in this suite
@@ -73,12 +25,15 @@ describe("Hangout Automation", function(){
 
 
 		it("login to google with team@", function(done) {
-			client = robopair.loginToGoogle().pause(100, function() { done(); });
+			client = robopair.loginToGoogle()
+				.pause(100, function() { done(); });
 		});
 
-		it("join hangout", function(done) {
+		it("start a hangout", function(done) {
 			var manual_hangout_url = "https://plus.google.com/hangouts/_?hso=0&gid=140030887085";
-			client = robopair.joinHangout(manual_hangout_url).pause(100, function() { done(); });
+			client = robopair.startAHangout(manual_hangout_url, 
+				"Customer+Expert {technology}", "stevejpurves@gmail.com")
+				.pause(100, function() { done(); });
 		});
 
 		// it("start recording", function(done){
