@@ -11,7 +11,9 @@ module.exports = function() {
 	app.post('/launch', api.launch);
 	app.post('/login/google', api.loginToGoogle);
 	app.post('/hangout', api.startAHangout);
-	app.post('/record', api.record);
+	app.post('/start-recording', api.startRecording);
+	app.post('/close', api.closeBrowser);
+	app.get('/get-url', api.getCurrentUrl);
 
 	return app;
 }

@@ -22,8 +22,25 @@ exports.startAHangout = function(req, res) {
 	});
 };
 
-exports.record = function(req, res) {
+exports.startRecording = function(req, res) {
 	robopair.record().pause(100, function(){
 		res.send(200);
 	});
 };
+
+exports.closeBrowser = function(req, res) {
+	robopair.close().pause(100, function() {
+		res.send(200);
+	});
+};
+
+exports.getCurrentUrl = function(req,res) {
+	robopair.getCurrentUrl(function(err, the_url) {
+		if (err)
+			res.send(409)
+		else
+			res.send(200, {url: the_url});
+	});
+};
+
+

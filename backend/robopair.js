@@ -79,6 +79,12 @@ module.exports = (function() {
 				.waitFor(selectors.recording_confirm_ok, 1000)
 				.click(selectors.recording_confirm_ok);
 		};
+
+		this.getCurrentUrl = function(callback) {
+			client.url(function(err, response) { 				
+				callback(err, response.value);
+			});
+		};
 	};
 
 	return Robopair;

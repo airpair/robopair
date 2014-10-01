@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1 VM Control Panel
+  h1 VM Scrappy Control Panel
   input(type="button", value="Launch Chrome", ng-click="launch()")
   br
   input(type="button", value="Login to Google", ng-click="loginToGoogle()")
@@ -11,4 +11,10 @@ block content
     input(type="entry", placeholder="Customer+Expert {technology}", ng-model="hangoutName")
     input(type="entry", placeholder="Invite emails, comma separated", ng-model="invites")
   input(type="button", value="Start Recording", ng-click="startRecording()")
+  br
+  input(type="button", value="Close Browser", ng-click="closeBrowser()")
+  br
+  div
+    input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
+    span {{currentUrl}}
   p {{lastStatus}}

@@ -3,13 +3,14 @@ var robopair = angular.module('Robopair', []);
 robopair.controller("MainController", ["$scope", "$http", function($scope, $http){
 	$scope.hangoutName = "Customer+Expert {technology}";
 	$scope.invites = "stevejpurves@gmail.com";
+	$scope.getCurrentUrl = "";
 	$scope.lastStatus = "";
 
 	function logStuff(promise) {
-		function logLastStatus(data, status) {
-			$scope.lastStatus = status + " | " + data;
+		function logLastStatus(response) {
+			$scope.lastStatus = response.status + " | " + response.data;
 		}
-		promise.success(logLastStatus).error(logLastStatus);
+		return promise.then(logLastStatus);
 	}
 
 	$scope.launch = function() {
@@ -26,7 +27,16 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	};
 
 	$scope.startRecording = function() {
-		logStuff($http.post('/robopair/api/record'));
+		logStuff($http.post('/robopair/api/start-recording'));
 	};
 
+	$scope.closeBrowser = function() {
+		logStuff($http.post('/robopair/api/close'));
+	};
+
+	$scope.getCurrentUrl = function() {
+		logStuff($http.get('/robopair/api/get-url').success(function(data) {
+			$scope.currentUrl = data.url;
+		}));
+	};
 }]);
