@@ -1,8 +1,8 @@
 var express = require('express');
 var routes = require('./routes');
-var api = require('./routes/api');
 var http = require('http');
 var path = require('path');
+var apiApp = require('./backend/app');
 
 function frontEndApp() {
 	var app = express();
@@ -18,21 +18,6 @@ function frontEndApp() {
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	app.get('/', routes.index);
-
-	return app;
-}
-
-function apiApp() {
-	var app = express();
-	app.use(express.logger('dev'));
-	app.use(express.json());
-	app.use(express.urlencoded());
-	app.use(express.methodOverride());
-
-	app.post('/launch', api.launch);
-	app.post('/login/google', api.loginToGoogle);
-	app.post('/hangout', api.startAHangout);
-	app.post('/record', api.record);
 
 	return app;
 }

@@ -1,5 +1,5 @@
 var webdriverio = require('webdriverio');
-var Robopair = require('../robopair');
+var Robopair = require('./robopair');
 
 var robopair = new Robopair(webdriverio, 'chrome');
 
