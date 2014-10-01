@@ -19,7 +19,13 @@ module.exports = (function() {
 		hangout_invite_list: "input.n-Ol-Qa",
 		hangout_start_button: "div.xb-Mc-ie-Gc div.c-N-K",
 		recording_start_button: '.tb-b-m div[role="button"]',
-		recording_confirm_ok: '.qa-l-ra div[role="button"]'
+		recording_confirm_ok: '.qa-l-ra div[role="button"]',
+		join_hangout_conditions_checkbox: 'div[role="presentation"].a-X-fe',
+		join_hangout_okay_go_for_it_button: '//*[@id=":t4.Dh"]',
+		join_hangout_join_button: '//*[@id=":t9.Sq"]',
+		stop_recording_button: '.tb-b-m div[role="button"]', //*[@id=":wc.ai"]',
+		recording_link_button: '.tb-P-Ua-pa-m div[role="button"]', //'//*[@id=":we.mi"]/div/div[1]',
+		recording_link_field: '.r-za input[type="text"]'
 	};
 
 	var webdriver;
@@ -65,19 +71,13 @@ module.exports = (function() {
 		};
 
 		this.takeoverAHangout = function(the_url) {
-			console.log("LOGGING",the_url);
 			return client.url(the_url)
-						.waitFor('div[role="presentation"].a-X-fe', 60000)
-						.pause(1000).click('div[role="presentation"].a-X-fe')
-						.waitFor('//*[@id=":t4.Dh"]',5000)
-						.pause(1000).click('//*[@id=":t4.Dh"]')
-						.waitFor('//*[@id=":t9.Sq"]',5000)
-						.pause(1000).click('//*[@id=":t9.Sq"]');
-
-						// checkbox div[role="presentation"].a-X-fe
-						// ok button .KMD69e-tb-Mc-X-m div[role="button"][value="Okay, got it!"]
-						////*[@id=":t4.Dh"]
-						//*[@id=":t4.Dh"]
+						.waitFor(selectors.join_hangout_conditions_checkbox, 60000)
+						.pause(1000).click(selectors.join_hangout_conditions_checkbox)
+						.waitFor(selectors.join_hangout_okay_go_for_it_button,5000)
+						.pause(1000).click(selectors.join_hangout_okay_go_for_it_button)
+						.waitFor(selectors.join_hangout_join_button,5000)
+						.pause(1000).click(selectors.join_hangout_join_button);
 		};
 
 		this.startAHangout = function(the_name, invites) {
@@ -96,14 +96,21 @@ module.exports = (function() {
 				.click(selectors.recording_confirm_ok);
 		};
 
-		this.stopRecording = function() {
-			return client.click('');
+		this.stopRecording = function() {			
+			return client.waitFor(selectors.stop_recording_button, 5000)
+				.click(selectors.stop_recording_button);
 		};	
 
 		this.getCurrentUrl = function(callback) {
 			client.url(function(err, response) { 				
 				callback(err, response.value);
 			});
+		};
+
+		this.getRecordingUrl = function(callback) {
+			client.click(selectors.recording_link_button)
+				.pause(1000).waitFor(selectors.recording_link_field, 5000)
+				.getValue(selectors.recording_link_field, function(err, value) { callback(err, value[1]) });
 		};
 	};
 

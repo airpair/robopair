@@ -55,4 +55,13 @@ exports.getCurrentUrl = function(req,res) {
 	});
 };
 
+exports.getRecordingUrl = function(req, res) {
+	robopair.getRecordingUrl(function(err, the_url) {
+		if (err)
+			res.send(409)
+		else
+			res.send(200, {recordingUrl: the_url});
+	});
+};
+
 

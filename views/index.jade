@@ -13,12 +13,15 @@ block content
   div
     input(type="button", value="Take Over", ng-click="takeover()")
     input(type="entry", placeholder="Paste the hangout link here", ng-model="takeoverThisUrl")
+  div
+    input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
+    a(ng-href="{{currentUrl}}"){{currentUrl}}
   input(type="button", value="Start Recording", ng-click="startRecording()")
   br
   input(type="button", value="Stop Recording", ng-click="stopRecording()")
   br
   div
-    input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
-    a(ng-href="{{currentUrl}}"){{currentUrl}}
-  input(type="button", value="Close Browser", ng-click="closeBrowser()")    
+    input(type="button", value="Get Recording Link", ng-click="getRecordingUrl()")
+    a(ng-href="{{recordingUrl}}") {{recordingUrl}}
+  input(type="button", value="Close Browser", ng-click="closeBrowser()")
   p {{lastStatus}}

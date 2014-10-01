@@ -16,6 +16,7 @@ module.exports = function() {
 	app.post('/stop-recording', api.stopRecording);
 	app.post('/close', api.closeBrowser);
 	app.get('/get-url', api.getCurrentUrl);
+	app.get('/get-recording-url', api.getRecordingUrl);
 
 	return app;
 }

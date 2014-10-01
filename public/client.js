@@ -6,6 +6,7 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	$scope.getCurrentUrl = "";
 	$scope.lastStatus = "";
 	$scope.takeoverThisUrl = "";
+	$scope.recordingUrl = "";
 
 	function logStuff(promise) {
 		function logLastStatus(response) {
@@ -46,6 +47,12 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	$scope.getCurrentUrl = function() {
 		logStuff($http.get('/robopair/api/get-url').success(function(data) {
 			$scope.currentUrl = data.url;
+		}));
+	};
+
+	$scope.getRecordingUrl = function() {
+		logStuff($http.get('/robopair/api/get-recording-url').success(function(data) {
+			$scope.recordingUrl = data.recordingUrl;
 		}));
 	};
 }]);
