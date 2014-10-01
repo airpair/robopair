@@ -26,8 +26,8 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 
 // all environments
-app.use('/robopair', frontEndApp());
 app.use('/robopair/api', apiApp());
+app.use('/robopair', frontEndApp());
 
 // development only
 if ('development' == app.get('env')) {

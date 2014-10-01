@@ -15,6 +15,12 @@ exports.loginToGoogle = function(req, res) {
 	});
 };
 
+exports.takeoverAHangout = function(req, res) {
+	robopair.takeoverAHangout(req.body.url).pause(100, function() {
+		res.send(200);
+	});
+};
+
 exports.startAHangout = function(req, res) {
 	var data = req.body;
 	robopair.startAHangout(data.name, data.invites).pause(100, function() {
@@ -23,7 +29,13 @@ exports.startAHangout = function(req, res) {
 };
 
 exports.startRecording = function(req, res) {
-	robopair.record().pause(100, function(){
+	robopair.startRecording().pause(100, function(){
+		res.send(200);
+	});
+};
+
+exports.stopRecording = function(req, res) {
+	robopair.stopRecording().pause(100, function() {
 		res.send(200);
 	});
 };

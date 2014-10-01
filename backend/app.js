@@ -10,8 +10,10 @@ module.exports = function() {
 
 	app.post('/launch', api.launch);
 	app.post('/login/google', api.loginToGoogle);
+	app.post('/takeover', api.takeoverAHangout);
 	app.post('/hangout', api.startAHangout);
 	app.post('/start-recording', api.startRecording);
+	app.post('/stop-recording', api.stopRecording);
 	app.post('/close', api.closeBrowser);
 	app.get('/get-url', api.getCurrentUrl);
 

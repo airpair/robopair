@@ -10,7 +10,12 @@ block content
     input(type="button", value="Start A Hangout", ng-click="startAHangout()")
     input(type="entry", placeholder="Customer+Expert {technology}", ng-model="hangoutName")
     input(type="entry", placeholder="Invite emails, comma separated", ng-model="invites")
+  div
+    input(type="button", value="Take Over", ng-click="takeover()")
+    input(type="entry", placeholder="Paste the hangout link here", ng-model="takeoverThisUrl")
   input(type="button", value="Start Recording", ng-click="startRecording()")
+  br
+  input(type="button", value="Stop Recording", ng-click="stopRecording()")
   br
   div
     input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")

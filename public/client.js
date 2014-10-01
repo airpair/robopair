@@ -5,6 +5,7 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	$scope.invites = "stevejpurves@gmail.com";
 	$scope.getCurrentUrl = "";
 	$scope.lastStatus = "";
+	$scope.takeoverThisUrl = "";
 
 	function logStuff(promise) {
 		function logLastStatus(response) {
@@ -21,6 +22,10 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 		logStuff( $http.post('/robopair/api/login/google') );
 	};
 
+	$scope.takeover = function() {
+		logStuff( $http.post('/robopair/api/takeover', {url: $scope.takeoverThisUrl}) );
+	};
+
 	$scope.startAHangout = function() {
 		logStuff($http.post('/robopair/api/hangout',
 			{name: $scope.hangoutName, invites: $scope.invites}));
@@ -29,6 +34,10 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	$scope.startRecording = function() {
 		logStuff($http.post('/robopair/api/start-recording'));
 	};
+
+	$scope.stopRecording = function() {
+		logStuff($http.post('/robopair/api/stop-recording'));
+	}
 
 	$scope.closeBrowser = function() {
 		logStuff($http.post('/robopair/api/close'));

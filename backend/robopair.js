@@ -64,6 +64,22 @@ module.exports = (function() {
 			return client;
 		};
 
+		this.takeoverAHangout = function(the_url) {
+			console.log("LOGGING",the_url);
+			return client.url(the_url)
+						.waitFor('div[role="presentation"].a-X-fe', 60000)
+						.pause(1000).click('div[role="presentation"].a-X-fe')
+						.waitFor('//*[@id=":t4.Dh"]',5000)
+						.pause(1000).click('//*[@id=":t4.Dh"]')
+						.waitFor('//*[@id=":t9.Sq"]',5000)
+						.pause(1000).click('//*[@id=":t9.Sq"]');
+
+						// checkbox div[role="presentation"].a-X-fe
+						// ok button .KMD69e-tb-Mc-X-m div[role="button"][value="Okay, got it!"]
+						////*[@id=":t4.Dh"]
+						//*[@id=":t4.Dh"]
+		};
+
 		this.startAHangout = function(the_name, invites) {
 			var the_url = "https://plus.google.com/hangouts/_?hso=0&gid=140030887085";
 			client.url(the_url).waitFor(selectors.hangout_name, 60000);
@@ -74,11 +90,15 @@ module.exports = (function() {
 			return client.pause(1000).click(selectors.hangout_start_button);
 		};
 
-		this.record = function() {
+		this.startRecording = function() {
 			return client.click(selectors.recording_start_button)
 				.waitFor(selectors.recording_confirm_ok, 1000)
 				.click(selectors.recording_confirm_ok);
 		};
+
+		this.stopRecording = function() {
+			return client.click('');
+		};	
 
 		this.getCurrentUrl = function(callback) {
 			client.url(function(err, response) { 				
