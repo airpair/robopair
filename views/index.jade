@@ -12,9 +12,8 @@ block content
     input(type="entry", placeholder="Invite emails, comma separated", ng-model="invites")
   input(type="button", value="Start Recording", ng-click="startRecording()")
   br
-  input(type="button", value="Close Browser", ng-click="closeBrowser()")
-  br
   div
     input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
-    span {{currentUrl}}
+    a(ng-href="{{currentUrl}}"){{currentUrl}}
+  input(type="button", value="Close Browser", ng-click="closeBrowser()")    
   p {{lastStatus}}
