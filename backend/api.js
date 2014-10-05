@@ -1,7 +1,7 @@
 var webdriverio = require('webdriverio');
 var Robopair = require('./robopair');
-
 var robopair = new Robopair(webdriverio, 'chrome');
+
 
 exports.launch = function(req, res){
 	robopair.launch().pause(100, function() { 

@@ -1,5 +1,13 @@
 module.exports = (function() {
 
+	var status = {
+		browser_launched: false,
+		logged_in_to_google: false,
+		in_a_hangout: false,
+		is_recording: false,
+		can_record: false
+	};
+
 	var strings = {
 		google_login_url: "https://accounts.google.com",
 		team_email: "team@airpair.com",
