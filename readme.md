@@ -10,5 +10,6 @@ Setup
 
 Per session
 -----------
+ - java -Dwebdriver.server.session.timeout XXXX(seconds)
  - webdriver-manager start (to startup a Selenium server)
  - mocha specs/*

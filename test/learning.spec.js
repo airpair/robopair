@@ -1,63 +1,76 @@
 var expect = require('chai').expect;
 var webdriverio = require('webdriverio');
 var test_options =  { desiredCapabilities: { browserName: 'chrome' } };
-var Robopair = require('../robopair');
+var Robopair = require('../backend/robopair');
 
-console.log(Robopair);
-
-describe("Hangout Automation", function(){
-	this.timeout(60000); // disable timeouts in this suite
+describe("Robopair API", function(){
+	this.timeout(100000); // disable timeouts in this suite
 	var robopair;
 	var client;
 
-	describe("In Browser Workflow", function(){
-		before(function(){
-			 robopair = new Robopair(webdriverio, 'chrome');
+	describe("In Browser Workflow", function() {
+		var any_hangout_name = "Customer+Expert {technology}";
+
+		before(function () {
+			robopair = new Robopair(webdriverio, 'chrome');
 		});
 
-		after(function(){
-			// robopair.close();
+		after(function (done) {
+			robopair.close()
+			done();
 		});
 
-		it ("launch a browser", function(done) {
-			client = robopair.launch().pause(1000, function() { done(); });
+		it("status should show no acivity", function() {
+			var the_status = robopair.status();
+			expect(the_status.launched).to.be.false
+			expect(the_status.loggedin).to.be.false
+			expect(the_status.hangout_running).to.be.false
 		});
 
+		it("launch a browser", function(done) {			
+			robopair.launch(function(response) { 
+				expect(response).to.be.true;
+				expect(robopair.status().launched).to.be.true;
+				done();
+			});
+		});
 
 		it("login to google with team@", function(done) {
-			client = robopair.loginToGoogle()
-				.pause(100, function() { done(); });
+			robopair.loginToGoogle(function(response) {
+				expect(response).to.be.true;
+				expect(robopair.status().loggedin).to.be.true
+				done();
+			});
 		});
 
-		it("start a hangout", function(done) {
-			client = robopair.startAHangout("Customer+Expert {technology}", "stevejpurves@gmail.com")
-				.pause(100, function() { done(); });
+		it("start a hangout with two emails", function(done) {
+			robopair.startAHangout(any_hangout_name, ["a@b.com", "b@d.com"], 
+				function(response) { 
+					expect(response).to.be.true;
+					expect(robopair.status().hangout_running).to.be.true
+					done();
+				});
 		});
 
-		// it("start recording", function(done){
-		// 	client.pause(60000) 
-		// 		.click('.tb-b-m div[role="button"]')
-		// 		.waitFor('#\3a 108\2e si', 1000)
-		// 		.click('#\3a 108\2e si', function(){ done(); });
+		// it("start recording", function(done) {
+		// 	robopair.startRecording(done);
+		// });
+
+		// it("get recording link", function(done){
+		// 	robopair.getRecordingLink(done);
 		// });
 
 		// it("stop recording", function(done) {
-		// 	client.pause(10000)
-		// 		.click();
+		// 	robopair.stopRecording(done);				
 		// });
 
-		// it("recover recording link", function () {
-		// 	var selector_links_link = '#\3a u0\2e Yh'; // 'div.r-b'
-		// 	var selector_recording_link = '#\3a u0\2e ai'; //r-l-Ga nZCpyb
-
-		// 	client.pause()
-		// }); 
-
-		it("recover hangout link");
-		it("end call") // .ha-w-me-f
-		it("close browser");
-		it("is recording?"); // #\:tx\.Vh
-		it("get status");
+		// it("recover hangout link", function(done) {
+		// 	robopair.getCurrentUrl(function(the_url) {
+		// 		expect(the_url).to.not.be.empty;
+		// 		expect(the_url).to.match(/http/);
+		// 		done();
+		// 	});
+		// });
 	});
 });
 

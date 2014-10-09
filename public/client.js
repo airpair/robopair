@@ -11,6 +11,7 @@ robopair.controller("MainController", ["$scope", "$http", function($scope, $http
 	function logStuff(promise) {
 		function logLastStatus(response) {
 			$scope.lastStatus = response.status + " | " + response.data;
+			setTimeout(function(){ $scope.lastStatus = ""; }, 4000);
 		}
 		return promise.then(logLastStatus);
 	}

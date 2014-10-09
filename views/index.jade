@@ -15,7 +15,7 @@ block content
     input(type="entry", placeholder="Paste the hangout link here", ng-model="takeoverThisUrl")
   div
     input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
-    a(ng-href="{{currentUrl}}"){{currentUrl}}
+    a(ng-href="{{currentUrl}}") {{currentUrl}}
   input(type="button", value="Start Recording", ng-click="startRecording()")
   br
   input(type="button", value="Stop Recording", ng-click="stopRecording()")
