@@ -149,14 +149,18 @@ module.exports = (function() {
 		};
 
 		this.startRecording = function(cb) {
-			if (client) {
-				client
-					.waitFor(selectors.recording_start_button, massive_wait)
-					.click(selectors.recording_start_button)
-					.waitFor(selectors.recording_confirm_ok, wait_length)
-					.click(selectors.recording_confirm_ok, function() {
-						cb();
-					});
+			if (client)
+			{
+				client.isVisible(selectors.recording_start_button, function(err, isVisible) {
+					client
+						.waitFor(selectors.recording_start_button, massive_wait)
+						.click(selectors.recording_start_button)
+						.waitFor(selectors.recording_confirm_ok, wait_length)
+						.click(selectors.recording_confirm_ok, function() {
+							this.is_recording = true;
+							cb();
+						});
+				});
 			}
 			return this;
 		};
@@ -164,7 +168,10 @@ module.exports = (function() {
 		this.stopRecording = function(cb) {
 			if (client) {		
 				client.waitFor(selectors.stop_recording_button, wait_length)
-					.click(selectors.stop_recording_button, function() {cb();});
+					.click(selectors.stop_recording_button, function() {
+						this.is_recording = false;
+						cb();
+					});
 			}
 			return this;
 		};	

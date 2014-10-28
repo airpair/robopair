@@ -4,12 +4,12 @@ var robopair = new Robopair(webdriverio, 'chrome');
 
 
 exports.status = function(req, res) {
-	res.status(200).end(robopair.status())
+	res.status(200).send(robopair.status());
 }
 
 exports.launch = function(req, res){
 	robopair.launch(function() { 
-		res.send(201);
+		res.status(201).end();
 	 });
 };
 
