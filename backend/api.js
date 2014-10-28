@@ -3,45 +3,49 @@ var Robopair = require('./robopair');
 var robopair = new Robopair(webdriverio, 'chrome');
 
 
+exports.status = function(req, res) {
+	res.status(200).end(robopair.status())
+}
+
 exports.launch = function(req, res){
-	robopair.launch().pause(100, function() { 
+	robopair.launch(function() { 
 		res.send(201);
 	 });
 };
 
 exports.loginToGoogle = function(req, res) {
-	robopair.loginToGoogle().pause(100, function() { 
+	robopair.loginToGoogle(function() { 
 		res.send(200);
 	});
 };
 
 exports.takeoverAHangout = function(req, res) {
-	robopair.takeoverAHangout(req.body.url).pause(100, function() {
+	robopair.takeoverAHangout(req.body.url, function() {
 		res.send(200);
 	});
 };
 
 exports.startAHangout = function(req, res) {
 	var data = req.body;
-	robopair.startAHangout(data.name, data.invites).pause(100, function() {
+	robopair.startAHangout(data.name, data.invites, function() {
 		res.send(200);
 	});
 };
 
 exports.startRecording = function(req, res) {
-	robopair.startRecording().pause(100, function(){
+	robopair.startRecording(function(){
 		res.send(200);
 	});
 };
 
 exports.stopRecording = function(req, res) {
-	robopair.stopRecording().pause(100, function() {
+	robopair.stopRecording(function() {
 		res.send(200);
 	});
 };
 
 exports.closeBrowser = function(req, res) {
-	robopair.close().pause(100, function() {
+	robopair.close( function() {
 		res.send(200);
 	});
 };

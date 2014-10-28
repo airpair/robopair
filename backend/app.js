@@ -8,6 +8,7 @@ module.exports = function() {
 	app.use(express.urlencoded());
 	app.use(express.methodOverride());
 
+	app.get('/status', api.status);
 	app.post('/launch', api.launch);
 	app.post('/login/google', api.loginToGoogle);
 	app.post('/takeover', api.takeoverAHangout);

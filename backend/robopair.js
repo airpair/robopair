@@ -3,14 +3,6 @@ var d = domain.create();
 
 module.exports = (function() {
 
-	var status = {
-		browser_launched: false,
-		logged_in_to_google: false,
-		in_a_hangout: false,
-		is_recording: false,
-		can_record: false
-	};
-
 	var strings = {
 		google_login_url: "https://accounts.google.com",
 		team_email: "team@airpair.com",
@@ -47,10 +39,12 @@ module.exports = (function() {
 	var pause_length = 3000;
 	var wait_length = 10000;
 	var massive_wait = 60000;
+
 	var status = {
-		launched: false,
-		loggedin: false,
-		hangout_running: false
+		browser_launched: false,
+		logged_in_to_google: false,
+		hangout_running: false,
+		is_recording: false
 	};
 
 	function Robopair(the_webdriver, the_browser) {
@@ -66,7 +60,7 @@ module.exports = (function() {
 				.remote({ desiredCapabilities: { browserName: the_browser } })
 				.init()
 				.pause(pause_length, function() { 
-					status.launched = true;
+					status.browser_launched = true;
 					cb(client !== null);
 				});
 			return this;
@@ -99,14 +93,14 @@ module.exports = (function() {
 							}
 							else
 							{
-								status.loggedin = true;
+								status.logged_in_to_google = true;
 								cb(true);
 							}
 						});			
 			return this;
 		};
 
-		this.takeoverAHangout = function(the_url) {
+		this.takeoverAHangout = function(the_url, cb) {
 			return client.url(the_url)
 						.waitFor(selectors.join_hangout_conditions_checkbox, wait_length)
 						.pause(pause_length)
@@ -147,7 +141,7 @@ module.exports = (function() {
 				.pause(pause_length)
 				.click(selectors.hangout_start_button)
 				.pause(pause_length)
-				.waitForVisible('.j-Ba-T', massive_wait, true)
+				.waitForVisible(selectors.recording_start_button, massive_wait, true)
 				.pause(pause_length, function() {
 					status.hangout_running = true;
 					cb(true);
@@ -155,32 +149,41 @@ module.exports = (function() {
 		};
 
 		this.startRecording = function(cb) {
-			client
-				.waitFor(selectors.recording_start_button, massive_wait)
-				.click(selectors.recording_start_button)
-				.waitFor(selectors.recording_confirm_ok, wait_length)
-				.click(selectors.recording_confirm_ok, function() {
-					cb(true);
-				});
+			if (client) {
+				client
+					.waitFor(selectors.recording_start_button, massive_wait)
+					.click(selectors.recording_start_button)
+					.waitFor(selectors.recording_confirm_ok, wait_length)
+					.click(selectors.recording_confirm_ok, function() {
+						cb();
+					});
+			}
 			return this;
 		};
 
-		this.stopRecording = function(cb) {			
-			return client.waitFor(selectors.stop_recording_button, wait_length)
-				.click(selectors.stop_recording_button, function() {cb(true);});
+		this.stopRecording = function(cb) {
+			if (client) {		
+				client.waitFor(selectors.stop_recording_button, wait_length)
+					.click(selectors.stop_recording_button, function() {cb();});
+			}
+			return this;
 		};	
 
 		this.getCurrentUrl = function(callback) {
-			client.url(function(err, response) { 				
-				callback(err, response.value);
-			});
+			if (client) {
+				client.url(function(err, response) {		
+					callback(err, response.value);
+				});
+			}
 			return this;
 		};
 
 		this.getRecordingUrl = function(callback) {
-			client.click(selectors.recording_link_button)
-				.pause(pause_length).waitFor(selectors.recording_link_field, wait_length)
-				.getValue(selectors.recording_link_field, function(err, value) { callback(err, value[1]) });
+			if (client) {
+				client.click(selectors.recording_link_button)
+					.pause(pause_length).waitFor(selectors.recording_link_field, wait_length)
+					.getValue(selectors.recording_link_field, function(err, value) { callback(err, value[1]) });				
+			}
 			return this;
 		};
 	};

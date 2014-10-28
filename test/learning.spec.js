@@ -3,7 +3,7 @@ var webdriverio = require('webdriverio');
 var test_options =  { desiredCapabilities: { browserName: 'chrome' } };
 var Robopair = require('../backend/robopair');
 
-describe("Robopair API", function(){
+describe("Robopair", function(){
 	this.timeout(100000); // disable timeouts in this suite
 	var robopair;
 	var client;
@@ -20,17 +20,18 @@ describe("Robopair API", function(){
 			done();
 		});
 
-		it("status should show no acivity", function() {
+		it("status should show no activity", function() {
 			var the_status = robopair.status();
-			expect(the_status.launched).to.be.false
-			expect(the_status.loggedin).to.be.false
+			expect(the_status.browser_launched).to.be.false
+			expect(the_status.logged_in_to_google).to.be.false
 			expect(the_status.hangout_running).to.be.false
+			expect(the_status.is_recording).to.be.false
 		});
 
 		it("launch a browser", function(done) {			
 			robopair.launch(function(response) { 
 				expect(response).to.be.true;
-				expect(robopair.status().launched).to.be.true;
+				expect(robopair.status().browser_launched).to.be.true;
 				done();
 			});
 		});
@@ -38,7 +39,7 @@ describe("Robopair API", function(){
 		it("login to google with team@", function(done) {
 			robopair.loginToGoogle(function(response) {
 				expect(response).to.be.true;
-				expect(robopair.status().loggedin).to.be.true
+				expect(robopair.status().logged_in_to_google).to.be.true
 				done();
 			});
 		});
@@ -53,24 +54,35 @@ describe("Robopair API", function(){
 		});
 
 		// it("start recording", function(done) {
-		// 	robopair.startRecording(done);
+		// 	robopair.startRecording(function(err) { 
+		// 		expect(err).to.be.null
+		// 		expect(robopair.status().is_recording).to.be.true
+		// 		done()
+		// 	});
 		// });
+
+		// it("stop recording", function(done) {
+		// 	robopair.stopRecording(function(err) {
+		// 		expect(err).to.be.null
+		// 		expect(robopair.status().is_recording).to.be.false
+		// 	});				
+		// });
+
+		it("recover hangout link", function(done) {
+			robopair.getCurrentUrl(function(err, the_url) {
+				expect(err).to.be.null;
+				expect(the_url).to.not.be.empty;
+				expect(the_url).to.match(/http/);
+				done();
+			});
+		});
 
 		// it("get recording link", function(done){
 		// 	robopair.getRecordingLink(done);
 		// });
 
-		// it("stop recording", function(done) {
-		// 	robopair.stopRecording(done);				
-		// });
 
-		// it("recover hangout link", function(done) {
-		// 	robopair.getCurrentUrl(function(the_url) {
-		// 		expect(the_url).to.not.be.empty;
-		// 		expect(the_url).to.match(/http/);
-		// 		done();
-		// 	});
-		// });
+
 	});
 });
 
