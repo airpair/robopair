@@ -1,27 +1,42 @@
 extends layout
 
 block content
-  h1 VM Scrappy Control Panel
-  input(type="button", value="Launch Chrome", ng-click="launch()")
-  br
-  input(type="button", value="Login to Google", ng-click="loginToGoogle()")
-  br
+  h1 Hangout VM Controls
+  ul(id="status")
+    li(ng-class="{status_green: status.browser_launched}") Browser launched
+    li(ng-class="{status_green: status.logged_in_to_google}") Logged In
+    li(ng-class="{status_green: status.hangout_running}") Hangout Running
+    li(ng-class="{status_green: status.is_recording}") Recording (ignore if recording was not started from here)
   div
-    input(type="button", value="Start A Hangout", ng-click="startAHangout()")
-    input(type="entry", placeholder="Customer+Expert {technology}", ng-model="hangoutName")
-    input(type="entry", placeholder="Invite emails, comma separated", ng-model="invites")
-  div
-    input(type="button", value="Take Over", ng-click="takeover()")
-    input(type="entry", placeholder="Paste the hangout link here", ng-model="takeoverThisUrl")
-  div
-    input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
+    span Active Hangout URL: 
     a(ng-href="{{currentUrl}}") {{currentUrl}}
-  input(type="button", value="Start Recording", ng-click="startRecording()")
-  br
-  input(type="button", value="Stop Recording", ng-click="stopRecording()")
+  div
+    ul(class="tabs")
+      li(ng-class="{active:tab===1}")
+        a(href, ng-click="tab=1") Start a New Hangout
+      li(ng-class="{active:tab===2}") 
+        a(href, ng-click="tab=2") Spin
+      li(ng-class="{active:tab===3}") 
+        a(href, ng-click="tab=3") Join a Hangout
+  div(style="clear:both;")
+  div(class="start_ctrls",ng-show="tab===1")
+    input(type="entry", placeholder="Customer+Expert {technology}", ng-model="hangoutName")
+    br
+    input(type="entry", placeholder="e-mails to invite, comma separated", ng-model="invites")
+    br
+    input(type="button", value="Start A Hangout", ng-click="startANewHangout()")
+  div(class="start_ctrls",ng-show="tab===3")
+    input(type="entry", placeholder="Paste the hangout link here", ng-model="joinThisUrl")
+    br
+    input(type="button", value="Join this Hangout", ng-click="joinAHangout()")
+  div(class="start_ctrls",ng-show="tab===2")
+    input(type="entry", placeholder="{name:'Customer+Expert (technology)', invites:['a@b.com', 'c@d.com']}", ng-model="spinningJson")
+    br
+    input(type="button", value="Spin", ng-click="takeover()")
   br
   div
-    input(type="button", value="Get Recording Link", ng-click="getRecordingUrl()")
-    a(ng-href="{{recordingUrl}}") {{recordingUrl}}
-  input(type="button", value="Close Browser", ng-click="closeBrowser()")
-  p {{lastStatus}}
+    input(type="button", value="Start Recording", ng-click="startRecording()")
+    br
+    input(type="button", value="Stop Recording", ng-click="stopRecording()")
+    br
+    input(type="button", value="Close Browser", ng-click="closeBrowser()")

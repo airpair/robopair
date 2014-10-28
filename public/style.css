@@ -18,3 +18,46 @@ div#main input[type="button"] {
 a {
   color: #00B7FF;
 }
+
+ul#status {
+	color: red;
+}
+
+li.status_green {
+	color: limegreen;
+}
+
+
+ul.tabs {
+	float: left;
+}
+
+ul.tabs li {
+	float: left;
+	background-color: rgb(250,250,250);
+	padding: 2px;
+	margin: 2px;
+	color: black;
+	list-style: none;
+}
+
+
+ul.tabs li:hover, ul.tabs li:hover a {
+	background-color: rgb(6,179,6);
+	color:white;
+}
+
+.start_ctrls {
+	border: 1px solid black;
+	padding: 2px;
+}
+
+input[type="entry"] {
+	width: 98%;
+	margin: 2px;
+}
+
+input[type="button"] {
+	width: 98%;
+	margin: 2px;
+}

@@ -24,8 +24,8 @@ module.exports = (function() {
 		recording_start_button: '.tb-b-m div[role="button"]',
 		recording_confirm_ok: '.qa-l-ra div[role="button"]',
 		join_hangout_conditions_checkbox: 'div[role="presentation"].a-X-fe',
-		join_hangout_okay_go_for_it_button: '//*[@id=":t4.Dh"]',
-		join_hangout_join_button: '//*[@id=":t9.Sq"]',
+		join_hangout_okay_go_for_it_button: '//*[@id=":t3.zh"]',//'//*[@id=":t4.Dh"]',
+		join_hangout_join_button: '//*[@id=":t6.Jq"]',//'//*[@id=":t9.Sq"]',
 		stop_recording_button: '.tb-b-m div[role="button"]', //*[@id=":wc.ai"]',
 		recording_link_button: '.tb-P-Ua-pa-m div[role="button"]', //tb-P-pa-m-J
 		recording_link_field: '.r-za input[type="text"]',
@@ -37,7 +37,7 @@ module.exports = (function() {
 	var browser;
 	var client = null;
 	var pause_length = 3000;
-	var wait_length = 10000;
+	var wait_length = 15000;
 	var massive_wait = 60000;
 
 	var status = {
@@ -139,10 +139,12 @@ module.exports = (function() {
 						
 			client.waitFor(selectors.hangout_start_button, wait_length)
 				.pause(pause_length)
+				.waitForEnabled(selectors.hangout_start_button, massive_wait)
 				.click(selectors.hangout_start_button)
 				.pause(pause_length)
 				.waitForVisible(selectors.recording_start_button, massive_wait, true)
 				.pause(pause_length, function() {
+					console.log(arguments)
 					status.hangout_running = true;
 					cb(true);
 				});
@@ -178,8 +180,11 @@ module.exports = (function() {
 
 		this.getCurrentUrl = function(callback) {
 			if (client) {
-				client.url(function(err, response) {		
-					callback(err, response.value);
+				client.url(function(err, response) {
+					if (err)
+						callback(err)
+					else
+						callback(err, response.value);
 				});
 			}
 			return this;

@@ -6,16 +6,16 @@ var apiApp = require('./backend/app');
 
 function frontEndApp() {
 	var app = express();
-
-
+	
 	app.set('views', path.join(__dirname, 'views'));
 	app.set('view engine', 'jade');
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
 	app.use(app.router);
-	app.use(express.static(path.join(__dirname, 'public')));
-
-	app.get('/', routes.index);
+	app.use(express.static(path.join(__dirname, 'public')));	
+	
+	app.get('/', routes.index)
+	app.get('/a', routes.advanced);
 
 	return app;
 }
