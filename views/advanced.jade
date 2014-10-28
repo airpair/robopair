@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title VM Control Panel
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', href='style.css')
+    script(src="bower_components/angularjs/angular.min.js")
+    script(src="client.js")
+  body
+    div(id="main", ng-app="Robopair", ng-controller="AdvancedController")
+      h1 All Controls
+      input(type="button", value="Launch Chrome", ng-click="launch()")
+      br
+      input(type="button", value="Login to Google", ng-click="loginToGoogle()")
+      br
+      div
+        input(type="button", value="Start A Hangout", ng-click="startAHangout()")
+        input(type="entry", placeholder="Customer+Expert {technology}", ng-model="hangoutName")
+        input(type="entry", placeholder="Invite emails, comma separated", ng-model="invites")
+      div
+        input(type="button", value="Take Over", ng-click="takeover()")
+        input(type="entry", placeholder="Paste the hangout link here", ng-model="takeoverThisUrl")
+      div
+        input(type="button", value="Get Current URL", ng-click="getCurrentUrl()")
+        a(ng-href="{{currentUrl}}") {{currentUrl}}
+      input(type="button", value="Start Recording", ng-click="startRecording()")
+      br
+      input(type="button", value="Stop Recording", ng-click="stopRecording()")
+      br
+      div
+        input(type="button", value="Get Recording Link", ng-click="getRecordingUrl()")
+        a(ng-href="{{recordingUrl}}") {{recordingUrl}}
+      input(type="button", value="Close Browser", ng-click="closeBrowser()")
+      p {{lastStatus}}
