@@ -139,12 +139,10 @@ module.exports = (function() {
 						
 			client.waitFor(selectors.hangout_start_button, wait_length)
 				.pause(pause_length)
-				.waitForEnabled(selectors.hangout_start_button, massive_wait)
 				.click(selectors.hangout_start_button)
 				.pause(pause_length)
 				.waitForVisible(selectors.recording_start_button, massive_wait, true)
 				.pause(pause_length, function() {
-					console.log(arguments)
 					status.hangout_running = true;
 					cb(true);
 				});
